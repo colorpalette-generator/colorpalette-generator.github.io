@@ -5,21 +5,21 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <!-- Primary Meta Tags -->
       <title>Color Palette Generator</title>
-      <meta name="title" content="Color Palette Generator" />
+      <meta name="title" content="Color Palette Generator - FREE" />
       <meta name="description" content="The best Color Palette Generator out there! Endless beautiful Color Palettes and Color Schemes for your Project. Get startet Now" />
       <meta name="keywords" content="Color, Color Palette, Color Palette Generator, Color Schemes">
       <!-- Open Graph / Facebook -->
       <meta property="og:type" content="website" />
       <meta property="og:url" content="TODO" />
-      <meta property="og:title" content="Color Palette Generator" />
+      <meta property="og:title" content="Color Palette Generator - FREE" />
       <meta property="og:description" content="The best Color Palette Generator out there! Endless beautiful Color Palettes and Color Schemes for your Project. Get startet Now" />
-      <meta property="og:image" content="https://colorpalette-generator.github.io/ColorPalettes.png" />
+      <meta property="og:image" content="TODO" />
       <!-- Twitter -->
       <meta property="twitter:card" content="summary_large_image" />
       <meta property="twitter:url" content="TODO" />
-      <meta property="twitter:title" content="Color Palette Generator" />
+      <meta property="twitter:title" content="Color Palette Generator - FREE" />
       <meta property="twitter:description" content="The best Color Palette Generator out there! Endless beautiful Color Palettes and Color Schemes for your Project. Get startet Now" />
-      <meta property="twitter:image" content="https://colorpalette-generator.github.io/ColorPalettes.png" />
+      <meta property="twitter:image" content="TODO" />
       <!-- Meta Tags Generated with https://metatags.io -->
       <style>
          * {
@@ -49,7 +49,7 @@
          padding: 1rem;
          background-color: #ffffff;
          box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-         gap: 2rem;
+         gap: 1rem;
          z-index: 1;
          }
          .right {
@@ -148,6 +148,8 @@
          h1 {
          font-size: 1.8rem;
          }
+         p {
+          }
          .color-box {
          min-height: 80px;
          }
@@ -160,10 +162,13 @@
         height: 100vh; /* Vollständige Bildschirmhöhe nutzen */
     }
     .left {
-        padding: 0rem;
+                padding: 1rem; /* Padding für mobile Geräte */
+        flex: 0 1 22%; /* Feste Basis von 20% der Höhe, um die Größe zu begrenzen */
+        max-height: 20%; /* Maximale Höhe des linken Teils */
+        overflow: hidden; /* Verhindert Überlauf */
     }
     .right {
-        height: 70%; /* Mehr Platz für Farbpalette */
+        flex: 1; /* Mehr Platz für Farbpalette */
     }
     h1 {
         font-size: 1.6rem; /* Etwas kleinere Überschrift */
