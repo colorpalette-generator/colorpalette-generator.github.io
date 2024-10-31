@@ -91,7 +91,6 @@
          cursor: pointer;
          }
          .color-box:hover {
-         transform: scale(1.02);
          }
          .color-box:hover::after {
          content: 'Click to Copy';
@@ -156,15 +155,15 @@
          }
          
          
-@media (max-width: 1768px) {
+@media (max-width: 968px) {
     .container {
         flex-direction: column;
-        height: 100vh; /* Vollständige Bildschirmhöhe nutzen */
+        height: 100svh; /* Vollständige Bildschirmhöhe nutzen */
     }
     .left {
                 padding: 1rem; /* Padding für mobile Geräte */
-        flex: 0 1 24dvh; /* Feste Basis von 20% der Höhe, um die Größe zu begrenzen */
-        max-height: 25dvh; /* Maximale Höhe des linken Teils */
+        flex: 0 1 25svh; /* Feste Basis von 20% der Höhe, um die Größe zu begrenzen */
+        max-height: 25svh; /* Maximale Höhe des linken Teils */
         overflow: hidden; /* Verhindert Überlauf */
     }
     .right {
