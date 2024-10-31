@@ -46,7 +46,7 @@
          align-items: center;
          justify-content: center;
          flex-direction: column;
-         padding: 2rem;
+         padding: 1rem;
          background-color: #ffffff;
          box-shadow: 2px 0 10px rgba(0,0,0,0.1);
          gap: 2rem;
@@ -152,6 +152,37 @@
          min-height: 80px;
          }
          }
+         
+         
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        height: 100vh; /* Vollständige Bildschirmhöhe nutzen */
+    }
+    .left {
+        padding: 0rem;
+    }
+    .right {
+        height: 70%; /* Mehr Platz für Farbpalette */
+    }
+    h1 {
+        font-size: 1.6rem; /* Etwas kleinere Überschrift */
+        margin-bottom: 0.5rem;
+    }
+    .subtitle {
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+    }
+    button {
+        padding: 0.7rem 1.5rem; /* Kompakterer Button */
+        font-size: 1rem;
+    }
+    .color-box {
+        min-height: 60px; /* Etwas kleinere Farbboxen */
+        font-size: 0.9em; /* Kleinere Schrift */
+    }
+}
+         
       </style>
    </head>
    <body>
