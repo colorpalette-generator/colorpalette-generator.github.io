@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="de">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- Primary Meta Tags -->
+      <title>Color Palette Generator</title>
+      <meta name="title" content="Color Palette Generator - FREE" />
+      <meta name="description" content="The best Color Palette Generator out there! Endless beautiful Color Palettes and Color Schemes for your Project. Get startet Now" />
+      <meta name="keywords" content="Color, Color Palette, Color Palette Generator, Color Schemes">
+      <!-- Open Graph / Facebook -->
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="TODO" />
+      <meta property="og:title" content="Color Palette Generator - FREE" />
+      <meta property="og:description" content="The best Color Palette Generator out there! Endless beautiful Color Palettes and Color Schemes for your Project. Get startet Now" />
+      <meta property="og:image" content="TODO" />
+      <!-- Twitter -->
+      <meta property="twitter:card" content="summary_large_image" />
+      <meta property="twitter:url" content="TODO" />
+      <meta property="twitter:title" content="Color Palette Generator - FREE" />
+      <meta property="twitter:description" content="The best Color Palette Generator out there! Endless beautiful Color Palettes and Color Schemes for your Project. Get startet Now" />
+      <meta property="twitter:image" content="TODO" />
+      <!-- Meta Tags Generated with https://metatags.io -->
+      <style>
+         * {
+         box-sizing: border-box;
+         margin: 0;
+         padding: 0;
+         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+         }
+         body, html {
+         height: 100%;
+         width: 100%;
+         display: flex;
+         background-color: #f8f9fa;
+         }
+         .container {
+         display: flex;
+         flex-direction: row;
+         width: 100%;
+         height: 100vh;
+         }
+         .left {
+         flex: 1;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         flex-direction: column;
+         padding: 2rem;
+         background-color: #ffffff;
+         box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+         gap: 2rem;
+         z-index: 1;
+         }
+         .right {
+         flex: 2;
+         display: flex;
+         flex-direction: column;
+         background-color: #ffffff;
+         }
+         h1 {
+         font-size: 2.5rem;
+         color: #2d3436;
+         text-align: center;
+         margin-bottom: 1rem;
+         line-height: 1.2;
+         }
+         .subtitle {
+         color: #636e72;
+         text-align: center;
+         margin-bottom: 2rem;
+         }
+         .controls {
+         display: flex;
+         flex-direction: column;
+         gap: 1rem;
+         width: 100%;
+         max-width: 300px;
+         }
+         .color-box {
+         flex: 1;
+         width: 100%;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         font-size: 1.2em;
+         color: #ffffff;
+         font-weight: bold;
+         transition: all 0.3s ease;
+         position: relative;
+         cursor: pointer;
+         }
+         .color-box:hover {
+         transform: scale(1.02);
+         }
+         .color-box:hover::after {
+         content: 'Click to Copy';
+         position: absolute;
+         bottom: 10px;
+         font-size: 0.8em;
+         opacity: 0.8;
+         }
+         button {
+         padding: 1rem 2rem;
+         font-size: 1.1em;
+         cursor: pointer;
+         border: none;
+         background-color: #0984e3;
+         color: white;
+         border-radius: 8px;
+         transition: all 0.3s ease;
+         width: 100%;
+         font-weight: 600;
+         }
+         button:hover {
+         background-color: #0869b6;
+         transform: translateY(-2px);
+         box-shadow: 0 4px 12px rgba(9, 132, 227, 0.2);
+         }
+         button:active {
+         transform: translateY(0);
+         }
+         .theme-selector {
+         display: flex;
+         gap: 1rem;
+         margin-top: 1rem;
+         }
+         .theme-btn {
+         padding: 0.5rem 1rem;
+         background-color: #f1f2f6;
+         border: none;
+         border-radius: 4px;
+         cursor: pointer;
+         color: #2d3436;
+         transition: all 0.3s ease;
+         }
+         .theme-btn:hover {
+         background-color: #0984e3;
+         color: white;
+         }
+         @media (max-width: 768px) {
+         .container {
+         flex-direction: column;
+         }
+         .left {
+         padding: 1rem;
+         }
+         h1 {
+         font-size: 1.8rem;
+         }
+         .color-box {
+         min-height: 80px;
+         }
+         }
+      </style>
+   </head>
+   <body>
+      <div class="container">
+         <div class="left">
+            <div>
+               <h1>Color Palette Generator</h1>
+               <p class="subtitle">no Ads - no SignUp - no Cookies</p>
+            </div>
+            <div class="controls">
+               <button onclick="generatePalette()">generate</button>
+            </div>
+         </div>
+         <div class="right" id="color-palette">
+            <div class="color-box" style="background-color: #cccccc;">#CCCCCC</div>
+            <div class="color-box" style="background-color: #aaaaaa;">#AAAAAA</div>
+            <div class="color-box" style="background-color: #888888;">#888888</div>
+            <div class="color-box" style="background-color: #666666;">#666666</div>
+            <div class="color-box" style="background-color: #444444;">#444444</div>
+         </div>
+      </div>
+      <script>
+         // Hilfsfunktion zur Konvertierung von HSL zu HEX
+         function hslToHex(h, s, l) {
+             l /= 100;
+             const a = s * Math.min(l, 1 - l) / 100;
+             const f = n => {
+                 const k = (n + h / 30) % 12;
+                 const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+                 return Math.round(255 * color).toString(16).padStart(2, '0');
+             };
+             return `#${f(0)}${f(8)}${f(4)}`.toUpperCase();
+         }
+         
+         // Hilfsfunktion zur Konvertierung von HEX zu HSL
+         function hexToHSL(hex) {
+             let r = parseInt(hex.slice(1, 3), 16) / 255;
+             let g = parseInt(hex.slice(3, 5), 16) / 255;
+             let b = parseInt(hex.slice(5, 7), 16) / 255;
+         
+             const max = Math.max(r, g, b);
+             const min = Math.min(r, g, b);
+             let h, s, l = (max + min) / 2;
+         
+             if (max === min) {
+                 h = s = 0;
+             } else {
+                 const d = max - min;
+                 s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                 switch (max) {
+                     case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                     case g: h = (b - r) / d + 2; break;
+                     case b: h = (r - g) / d + 4; break;
+                 }
+                 h /= 6;
+             }
+         
+             return {
+                 h: Math.round(h * 360),
+                 s: Math.round(s * 100),
+                 l: Math.round(l * 100)
+             };
+         }
+         
+         // CodeBases - Inspiration für den Algorithmus
+         const colorSchemes = {
+         
+         others: [
+         ['#585123', '#eec170', '#f2a65a', '#f58549', '#772f1a'],
+         ['#f6bd60', '#f7ede2', '#f5cac3', '#84a59d', '#f28482'],
+         ['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51'],
+         ['#1b9aaa', '#ffffff', '#e6e8e6', '#ee4035', '#f37736'],
+         ['#007f5f', '#2b9348', '#55a630', '#80b918', '#aacc00'],
+         ['#ff6b6b', '#ffe66d', '#4ecdc4', '#1a535c', '#ff8c42'],
+         ['#a8dadc', '#457b9d', '#1d3557', '#f1faee', '#e63946'],
+         ['#ffbe0b', '#fb5607', '#ff006e', '#8338ec', '#3a86ff'],
+         ['#3d5a80', '#98c1d9', '#e0fbfc', '#ee6c4d', '#293241'],
+         ['#6a0572', '#ab83a1', '#d9a5b3', '#f5d6ba', '#ffd6e0'],
+         ['#0d1b2a', '#1b263b', '#415a77', '#778da9', '#e0e1dd'],
+         ['#ff9f1c', '#ffbf69', '#ffffff', '#cbf3f0', '#2ec4b6'],
+         ['#114b5f', '#028090', '#e4fde1', '#456990', '#f45b69'],
+         ['#b4a0e5', '#f1e3e4', '#d3f8e2', '#f1e3e4', '#e4c1f9'],
+         ['#ffe4e1', '#fa8072', '#ff6347', '#ff4500', '#ff1493'],
+         ['#6d6875', '#b5838d', '#e5989b', '#ffb4a2', '#ffcdb2'],
+         ['#4b3f72', '#ff4f79', '#ff774e', '#ffac3a', '#ffd966'],
+         ['#542e71', '#fb3640', '#fdca40', '#a799b7', '#2a2d34'],
+         ['#d8a47f', '#bb8588', '#a984e3', '#5d4e60', '#2a2c2b'],
+         ['#1f2041', '#4b3f72', '#ffc857', '#119da4', '#19647e'],
+         ['#22223b', '#4a4e69', '#9a8c98', '#c9ada7', '#f2e9e4'],
+         ['#8ecae6', '#219ebc', '#023047', '#ffb703', '#fb8500'],
+         ['#d3c4d1', '#f0ebcc', '#ead7d1', '#f2b880', '#fce181'],
+         ['#006d77', '#83c5be', '#edf6f9', '#ffddd2', '#e29578'],
+         ['#251f47', '#534666', '#e27d60', '#e8a87c', '#c38d9e'],
+         ['#1a535c', '#4ecdc4', '#f7fff7', '#ff6b6b', '#ffe66d'],
+         ['#ffcbf2', '#f3c4fb', '#ecbcfd', '#e5b3fe', '#e2afff'],
+         ['#c9b6e4', '#b8c5d6', '#97d2fb', '#83bcff', '#80ffe8'],
+         ['#cfb495', '#dfd3c3', '#efe1d1', '#f2f2f2', '#424b54'],
+         ['#028090', '#00a896', '#02c39a', '#f0f3bd', '#02c39a'],
+         ['#0c0a3e', '#7b1e7a', '#b33f62', '#f9564f', '#f3c677'],
+             ['#5b3000', '#66462c', '#726953', '#76877d', '#82a6b1'],
+             ['#0a122a', '#698f3f', '#fbfaf8', '#e7decd', '#804e49'],
+             ['#091540', '#7692ff', '#abd2fa', '#3d518c', '#1b2cc1'],
+             ['#306b34', '#1c5253', '#f3ffc6', '#c3eb78', '#b6174b'],
+             ['#d7263d', '#f46036', '#2e294e', '#1b998b', '#c5d86d'],
+             ['#ff6b35', '#f7c59f', '#efefd0', '#004e89', '#1a659e'],
+             ['#283d3b', '#197278', '#edddd4', '#c44536', '#772e25'],
+             ['#020202', '#0d2818', '#04471c', '#058c42', '#16db65'],
+             ['#dcdcdd', '#c5c3c6', '#46494c', '#4c5c68', '#1985a1'],
+             ['#2c6e49', '#4c956c', '#fefee3', '#ffc9b9', '#d68c45'],
+             ['#585123', '#eec170', '#f2a65a', '#f58549', '#772f1a'],
+             ['#f6bd60', '#f7ede2', '#f5cac3', '#84a59d', '#f28482'],
+             ['#606c38', '#283618', '#fefae0', '#dda15e', '#bc6c25'],
+             ['#8ecae6', '#219ebc', '#023047', '#ffb703', '#fb8500'],
+             ['#000000', '#14213d', '#fca311', '#e5e5e5', '#ffffff'],
+             ['#780000', '#c1121f', '#fdf0d5', '#003049', '#669bbc'],
+             ['#5f0f40', '#9a031e', '#fb8b24', '#e36414', '#0f4c5c'],
+             ['#335c67', '#fff3b0', '#e09f3e', '#9e2a2b', '#540b0e'],
+             ['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51'],
+             ['#177e89', '#084c61', '#db3a34', '#ffc857', '#323031'],
+             ['#f7f7f2', '#e4e6c3', '#899878', '#222725', '#121113'],
+             ['#3d5a80', '#98c1d9', '#e0fbfc', '#ee6c4d', '#293241'],
+             ['#ff6700', '#ebebeb', '#c0c0c0', '#3a6ea5', '#004e98'],
+             ['#fffcf2', '#ccc5b9', '#403d39', '#252422', '#eb5e28'],
+             ['#352208', '#e1bb80', '#7b6b43', '#685634', '#806443'],
+             ['#00a6fb', '#0582ca', '#006494', '#003554', '#051923'],
+             ['#001524', '#15616d', '#ffecd1', '#ff7d00', '#78290f'],
+             ['#cfdbd5', '#e8eddf', '#f5cb5c', '#242423', '#333533'],
+             ['#f4f1de', '#e07a5f', '#3d405b', '#81b29a', '#f2cc8f'],    
+             ['#2D4059', '#EA5455', '#F07B3F', '#FFD460', '#FBD1A2'],
+             ['#1A1A2E', '#16213E', '#0F3460', '#E94560', '#FFFFFF'],
+             ['#364F6B', '#3FC1C9', '#F5F5F5', '#FC5185', '#00B8A9'],
+             ['#233142', '#455D7A', '#F95959', '#E3E3E3', '#F7F7F7'],
+             ['#1B262C', '#0F4C75', '#3282B8', '#BBE1FA', '#E8F0F2'],
+             ['#1A4D2E', '#9EC33B', '#E7D64F', '#F29F05', '#F25C05'],
+             ['#344E41', '#588157', '#A3B18A', '#DAD7CD', '#3A5A40'],
+             ['#2C5530', '#4C9F70', '#A4C3A2', '#CCB7AE', '#774936'],
+             ['#395144', '#4E6C50', '#AA8B56', '#F0EBCE', '#251B15'],
+             ['#183A37', '#432818', '#99582A', '#D6955B', '#FFE6A7'],
+             ['#331B3F', '#B80D57', '#FF385C', '#FF7F5C', '#FFA41B'],
+             ['#1D1CE5', '#4649FF', '#7978FF', '#C47AFF', '#FF7A00'],
+             ['#0C0A3E', '#7B1E7A', '#B33F62', '#F9564F', '#F3C677'],
+             ['#2B124C', '#522B47', '#854442', '#E87B3D', '#F5C03E'],
+             ['#2D142C', '#510A32', '#801336', '#C72C41', '#EE4540'],
+             ['#05445E', '#189AB4', '#75E6DA', '#D4F1F4', '#022C43'],
+             ['#1A374D', '#406882', '#6998AB', '#B1D0E0', '#003459'],
+             ['#00353F', '#0066A2', '#00A9C0', '#94D5E2', '#002B5B'],
+             ['#012030', '#13678A', '#45C4B0', '#9AEBA3', '#DAFDBA'],
+             ['#012443', '#186F65', '#B5CB99', '#FCE09B', '#B2533E'],
+             ['#2D3A3A', '#3F4B3B', '#647E68', '#A4B494', '#C5D5B0'],
+             ['#54714A', '#849B7E', '#AFC8AF', '#D6E2D5', '#2A3E26'],
+             ['#344146', '#68836D', '#9CAF94', '#CFD7C0', '#F2E6CE'],
+             ['#3B4A3F', '#5C715E', '#7D9A81', '#9EC0A5', '#BFE4CE'],
+             ['#1E3932', '#365B42', '#4E7D52', '#66A062', '#7EC372'],
+             ['#2C1810', '#693D3D', '#BA5536', '#A43820', '#E0A370'],
+             ['#3F2305', '#854D27', '#C68B48', '#D4B483', '#7E4E3B'],
+             ['#4A2F1D', '#825D4E', '#B98B73', '#E6B8A2', '#8B4513'],
+             ['#3C2A21', '#628E90', '#B4CDE6', '#A5978B', '#D5CEA3'],
+             ['#3F2E3E', '#674F63', '#8E7B89', '#B6A5B4', '#DED3DE'],
+             ['#2B2D42', '#8D99AE', '#EDF2F4', '#0B3954', '#4F6D7A'],
+             ['#1D1D1B', '#3D3D3B', '#6D6D6B', '#9D9D9B', '#CDCDCB'],
+             ['#2F4858', '#33658A', '#86BBD8', '#758E4F', '#F6AE2D'],
+             ['#1B2430', '#51557E', '#816797', '#D6D5A8', '#816797'],
+             ['#394867', '#212A3E', '#9BA4B5', '#F1F6F9', '#394867'],
+             ['#9aadbf', '#6d98ba', '#d3b99f', '#c17767', '#210203'],
+             ['#8ecae6', '#219ebc', '#023047', '#ffb703', '#fb8500'],
+             ['#220901', '#621708', '#941b0c', '#bc3908', '#f6aa1c'],
+             ['#1d5b2d', '#cd6328', '#137296', '#090a0b', '#ffffff'],
+             ['#0c0a3e', '#7b1e7a', '#b33f62', '#f9564f', '#f3c677'],
+             ['#5b3000', '#66462c', '#726953', '#76877d', '#82a6b1'],
+             ['#0a122a', '#698f3f', '#fbfaf8', '#e7decd', '#804e49'],
+             ['#091540', '#7692ff', '#abd2fa', '#3d518c', '#1b2cc1'],
+             ['#306b34', '#1c5253', '#f3ffc6', '#c3eb78', '#b6174b'],
+             ['#d7263d', '#f46036', '#2e294e', '#1b998b', '#c5d86d'],
+             ['#ff6b35', '#f7c59f', '#efefd0', '#004e89', '#1a659e'],
+             ['#283d3b', '#197278', '#edddd4', '#c44536', '#772e25'],
+             ['#020202', '#0d2818', '#04471c', '#058c42', '#16db65'],
+             ['#dcdcdd', '#c5c3c6', '#46494c', '#4c5c68', '#1985a1'],
+             ['#2c6e49', '#4c956c', '#fefee3', '#ffc9b9', '#d68c45'],
+             ['#585123', '#eec170', '#f2a65a', '#f58549', '#772f1a'],
+             ['#f6bd60', '#f7ede2', '#f5cac3', '#84a59d', '#f28482']
+         ]   
+         };
+         
+         // Funktion zum Kopieren des Farbcodes
+         function copyToClipboard(text) {
+             navigator.clipboard.writeText(text).then(() => {
+                 // Optional: Feedback für den Nutzer
+                 const notification = document.createElement('div');
+                 notification.textContent = 'copied';
+                 notification.style.position = 'fixed';
+                 notification.style.bottom = '20px';
+                 notification.style.left = '50%';
+                 notification.style.transform = 'translateX(-50%)';
+                 notification.style.backgroundColor = '#0984e3';
+                 notification.style.color = 'white';
+                 notification.style.padding = '10px 20px';
+                 notification.style.borderRadius = '5px';
+                 notification.style.zIndex = '1000';
+                 document.body.appendChild(notification);
+                 
+                 setTimeout(() => {
+                     notification.remove();
+                 }, 2000);
+             });
+         }
+         
+         // Hauptfunktion zur Generierung der Farbpalette
+         function generatePalette() {
+             const palette = document.getElementById('color-palette');
+             const colorBoxes = palette.getElementsByClassName('color-box');
+             
+             // Zufällige Auswahl eines Farbschemas und einer Variation
+             const schemes = Object.values(colorSchemes);
+             const selectedScheme = schemes[Math.floor(Math.random() * schemes.length)];
+             const selectedVariation = selectedScheme[Math.floor(Math.random() * selectedScheme.length)];
+             
+             // Manchmal die Farben leicht variieren für Einzigartigkeit
+             const finalColors = selectedVariation.map(color => {
+                 const hsl = hexToHSL(color);
+                 // Kleine zufällige Anpassungen
+                 hsl.h = (hsl.h + Math.floor(Math.random() * 10) - 5) % 360;
+                 hsl.s = Math.max(0, Math.min(100, hsl.s + Math.floor(Math.random() * 10) - 5));
+                 hsl.l = Math.max(0, Math.min(100, hsl.l + Math.floor(Math.random() * 10) - 5));
+                 return hslToHex(hsl.h, hsl.s, hsl.l);
+             });
+         
+             // Farben auf die Boxen anwenden
+             for (let i = 0; i < colorBoxes.length; i++) {
+                 const color = finalColors[i];
+                 const box = colorBoxes[i];
+                 box.style.backgroundColor = color;
+                 box.textContent = color;
+                 
+                 // Click-Event zum Kopieren des Farbcodes
+                 box.onclick = () => copyToClipboard(color);
+                 
+                 // Textfarbe basierend auf Helligkeit anpassen
+                 const hsl = hexToHSL(color);
+                 box.style.color = hsl.l > 60 ? '#2d3436' : '#ffffff';
+             }
+         }
+         
+         // Initial eine Palette generieren
+         generatePalette();
+      </script>
+   </body>
+</html>
